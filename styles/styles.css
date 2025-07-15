@@ -131,3 +131,42 @@
 .map-container{
     border: 2px solid red;
 }
+
+
+
+/*--------------------Media queries----------------------*/
+@media (min-width: 900px){
+
+    .header-container-img{
+        background-image: url(/images/pattern-bg-desktop.png);
+    }
+
+
+    /*-- information container --*/
+    .information-set{
+        height: 25%;
+        top: 40%;
+        border: 10px solid red;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+
+    }
+
+    .information-container{
+        border: 1px solid black;
+        height: 100%;
+        align-items: flex-start;
+        padding-left: 40px;
+    }
+
+    .information-title{
+        font-size: 18px;
+    }
+
+    .information-api{
+        font-size: 32px;
+    }
+
+
+}
