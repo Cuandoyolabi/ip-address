@@ -85,7 +85,6 @@
 .buscador-img{
     background-image: url(/images/icon-arrow.svg);
     background-color: black;
-
 }
 
 /*--------------- Contenedor de informacion -------------------*/
@@ -141,8 +140,6 @@
     z-index: 2;
 }
 
-
-
 /*--------------------Media queries----------------------*/
 @media (min-width: 900px){
 
@@ -181,10 +178,14 @@
         height: 100%;
         align-items: flex-start;
         padding-left: 30px;
-        border-right: 1px solid rgb(202, 202, 202);
         border-radius: 0;
         text-align: start;
     }
+
+    .gray-line{
+        border-right: 1px solid rgb(202, 202, 202);
+    }
+
 
     .information-title{
         font-size: 18px;
@@ -194,5 +195,22 @@
         font-size: 24px;
     }
 
+
+}
+
+
+/*Media queries para pantallas verticales grandes*/
+@media (min-height: 800px) and (orientation: portrait) {
+
+    /*header*/
+    .buscador-container{
+        margin-top: 25%;
+    }
+
+    /*main*/
+    .information-set{
+        width: 92%;
+        height: 10%;
+    }
 
 }
