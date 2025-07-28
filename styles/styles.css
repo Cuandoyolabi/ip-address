@@ -97,7 +97,6 @@
     flex-direction: column;
     background-color: white;
     position: absolute;
-    border: 1px solid rgb(173, 173, 173);
     border-radius: 20px;
     top: 45%;
     left: 50%;
@@ -113,6 +112,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     gap: 10px;
     border-radius: 13px;
 }
@@ -125,6 +125,7 @@
 
 .information-api{
     font-weight: 500;
+    font-size: 19px;
 }
 
 /*---------------- Contenedor del mapa ------------------------*/
@@ -166,9 +167,6 @@
         width: 100%;
     }
 
-
-
-
     /*-- information container --*/
     .information-set{
         height: 21%;
@@ -182,9 +180,10 @@
     .information-container{
         height: 100%;
         align-items: flex-start;
-        padding-left: 40px;
-        border-right: 1px solid black;
+        padding-left: 30px;
+        border-right: 1px solid rgb(202, 202, 202);
         border-radius: 0;
+        text-align: start;
     }
 
     .information-title{
@@ -192,7 +191,7 @@
     }
 
     .information-api{
-        font-size: 32px;
+        font-size: 24px;
     }
 
 
