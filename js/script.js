@@ -17,54 +17,68 @@ const buscador__id = document.getElementById("buscador__id");
 const button__id = document.getElementById("buscador__btn__id");
 
 
-button__id.addEventListener('click', () => {
-    const ipUsuario = buscador__id.value.trim();
-
-    buscarIP(ipUsuario)
-})
+let map;
+let marker;
 
 async function buscarIP(Ip){
     
-    //const fullURL = `${API}?apiKey=${API_KEY}&ipAddress=${Ip}`;
     const fullURL = `${API}?apiKey=${API_KEY}&ipAddress=${Ip}`;
-    const solicitud = await fetch(fullURL)
+    const response = await fetch(fullURL);
+    const data = await response.json();
 
-    .then(response => response.json())
-    .then(data => { 
-        console.log(data)
-        console.log(data.ip)
-        id.textContent = data.ip;
-        locationZone.textContent = data.location.region;
-        timeZone.textContent = data.location.timezone;
-        isp.textContent = data.isp;
+    console.log(data);
+    id.textContent = data.ip;
+    locationZone.textContent = data.location.region;
+    timeZone.textContent = data.location.timezone;
+    isp.textContent = data.isp;
 
-        return {
-            latitud: data.location.lat,
-            longitud: data.location.lng
-        };
-    });
+    return {
+        latitud: data.location.lat,
+        longitud: data.location.lng
+    };
 }
 
-// El mapa recibira la latitud y la longitud que retorna la funciona buscarIP.
-/* ---- Mapa --- */
+
+button__id.addEventListener('click', async () => {
+    const ipUsuario = buscador__id.value.trim();
+
+    if(!ipUsuario) return alert("Escribe una Ip Valida");
+
+    const coordenadas = await buscarIP(ipUsuario);
+    console.log(coordenadas)
+    if(!map){
+        map = L.map('map').setView([coordenadas.latitud, coordenadas.longitud], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        marker = L.marker([coordenadas.latitud, coordenadas.longitud]).addTo(map);
+    } else {
+        // Si ya existe, solo actualizamos posición
+        map.setView([coordenadas.latitud, coordenadas.longitud], 13);
+        marker.setLatLng([coordenadas.latitud, coordenadas.longitud]);
+    }
+});
+
+window.addEventListener('DOMContentLoaded', async () => {
+    // Obtener la IP pública del usuario
+    const ipResponse = await fetch('https://api.ipify.org?format=json');
+    const ipData = await ipResponse.json();
+    const ipUsuario = ipData.ip;
+
+    const coordenadas = await buscarIP(ipUsuario);
+
+    map = L.map('map').setView([coordenadas.latitud, coordenadas.longitud], 13);
+
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    }).addTo(map);
+
+    marker = L.marker([coordenadas.latitud, coordenadas.longitud]).addTo(map);
+});
 
 
-/*let map = L.map('map').setView([51.505, -0.09], 13);
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-
-var marker = L.marker([51.5, -0.09]).addTo(map);
-*/
-
-let map = L.map('map').setView([latitud, longitud], 13);
-
-
-L.tileLayer(`https://tile.openstreetmap.org/${latitud}/${longitud}/{13}.png`, {
-    maxZoom: 19,
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-
-var marker = L.marker([51.5, -0.09]).addTo(map);
